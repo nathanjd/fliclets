@@ -1,0 +1,14 @@
+{
+    "panel": {
+        "id": 1,
+        "media": 1,
+        "start": 0.0,
+        "end": 1.4,
+        "selectedBy": [1],
+        "lastUpdate": 0
+    },
+
+    "links": {
+        "self": "/js/api/panel.json"
+    }
+}

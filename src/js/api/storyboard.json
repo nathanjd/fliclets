@@ -1,0 +1,13 @@
+{
+    "storyboard": {
+        "id": 1,
+        "name": "Awesome Storyboard",
+        "panels": [1],
+        "media": [1],
+        "lastUpdate": 0
+    },
+
+    "links": {
+        "self": "/js/api/storyboard.json"
+    }
+}

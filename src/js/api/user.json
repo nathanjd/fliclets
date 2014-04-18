@@ -1,0 +1,12 @@
+{
+    "user": {
+        "id": 1,
+        "name": "NathanJD",
+        "lastUpdate": 0,
+        "media": [1]
+    },
+
+    "links": {
+        "self": "/js/api/user.json"
+    }
+}

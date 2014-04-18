@@ -1,0 +1,19 @@
+{
+    "media": {
+        "id": 1,
+        "name": "copter",
+        "type": "video",
+        "thumbnail": {
+            "uri": "//placehold.it/80x60",
+            "width": 80,
+            "height": 60
+        },
+        "duration": 5.3,
+        "uri": "/media/copter.ogv",
+        "lastUpdate": 0
+    },
+
+    "links": {
+        "self": "/js/api/media.json"
+    }
+}

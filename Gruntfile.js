@@ -31,6 +31,12 @@ module.exports = function(grunt) {
                         cwd: 'src/js/',
                         src: '**',
                         expand: true
+                    },
+                    {
+                        dest: 'compiled/media/',
+                        cwd: 'src/media/',
+                        src: '**',
+                        expand: true
                     }
                 ]
             }
