@@ -44,7 +44,8 @@ function(router, hasher, bucket, S3) {
     // Load views.
     require([
         'views/index',
-        'views/page'
+        'views/page',
+        'views/cutting-room'
     ], function() {
         // start listening for history change
         hasher.init();

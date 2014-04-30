@@ -15,3 +15,8 @@ As Seth Rogan, I want to receive instruction from the teacher outside of office 
 As Morgan Freeman, I want to check the status of my students' films online so that I can spend more time at home.
 
 As Morgan Freeman, I want to provide feedback on in-progress films so that I can help struggling students.
+
+
+1) As Seth Rogan, I want to receive instruction from the teacher outside of office hours so that I can meet class deadlines.
+2) As Morgan Freeman, I want to provide feedback on in-progress films so that I can help struggling students.
+3) As Natalie Portman, I want to show my friends the film I am producing so that I can receive feedback.

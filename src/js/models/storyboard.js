@@ -1,13 +1,11 @@
 define(['models/model'], function(Model) {
     function Storyboard(data) {
-        this.id         = data.id         || null;
-        this.name       = data.name       || null;
-        this.panels     = data.panels     || [];
-        this.media      = data.media      || [];
-        this.lastUpdate = data.lastUpdate || 0;
+        this.set(data);
     }
 
     Storyboard.prototype = Model;
+
+    Media.prototype.apiPath = '/js/api/storyboard/';
 
     Storyboard.prorotype.addPanel = function(panel, index) {
         if (index === undefined) {

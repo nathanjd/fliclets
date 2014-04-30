@@ -1,12 +1,11 @@
 define(['models/model'], function(Model) {
     function User(data) {
-        this.id         = data.id         || null;
-        this.name       = data.name       || null;
-        this.media      = data.media      || null;
-        this.lastUpdate = data.lastUpdate || 0;
+        this.set(data);
     }
 
     User.prototype = Model;
+
+    Media.prototype.apiPath = '/js/api/user/';
 
     return User;
 });

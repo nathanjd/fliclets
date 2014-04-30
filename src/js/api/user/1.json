@@ -2,8 +2,9 @@
     "user": {
         "id": 1,
         "name": "NathanJD",
-        "lastUpdate": 0,
-        "media": [1]
+        "media": [1],
+        "createdAt": 1398822082448,
+        "modifiedAt": 1398822105311
     },
 
     "links": {

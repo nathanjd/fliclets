@@ -1,0 +1,18 @@
+{
+    "media": {
+        "id": 1,
+        "name": "copter",
+        "type": "video",
+        "thumbnail": 2,
+        "duration": 5.3,
+        "width": 560,
+        "height": 320,
+        "uri": "/media/copter.ogv",
+        "createdAt": 1398822082448,
+        "modifiedAt": 1398822105311
+    },
+
+    "links": {
+        "self": "/js/api/media/1.json"
+    }
+}

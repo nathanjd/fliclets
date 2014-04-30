@@ -1,0 +1,18 @@
+{
+    "media": {
+        "id": 2,
+        "name": "copter",
+        "type": "image",
+        "thumbnail": 2,
+        "duration": null,
+        "width": 560,
+        "height": 320,
+        "uri": "/media/copter.jpg",
+        "createdAt": 1398822082448,
+        "modifiedAt": 1398822105311
+    },
+
+    "links": {
+        "self": "/js/api/media/2.json"
+    }
+}

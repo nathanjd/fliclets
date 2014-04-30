@@ -4,7 +4,9 @@
         "name": "Awesome Storyboard",
         "panels": [1],
         "media": [1],
-        "lastUpdate": 0
+        "lastUpdate": 0,
+        "createdAt": 1398822082448,
+        "modifiedAt": 1398822105311
     },
 
     "links": {
