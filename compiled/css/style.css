@@ -78,3 +78,155 @@ body {
     margin-right: 0; }
   #js-app #content h3 {
     margin-top: 0; }
+
+.cutting-room .top-half, .cutting-room .toolbar {
+  *zoom: 1;
+  display: block; }
+  .cutting-room .top-half:before, .cutting-room .top-half:after, .cutting-room .toolbar:before, .cutting-room .toolbar:after {
+    content: " ";
+    display: table; }
+  .cutting-room .top-half:after, .cutting-room .toolbar:after {
+    clear: both; }
+.cutting-room .player {
+  display: block;
+  float: left;
+  margin-right: 2.35765%;
+  width: 65.88078%;
+  padding: 0;
+  margin: 0; }
+  .cutting-room .player:last-child {
+    margin-right: 0; }
+  .cutting-room .player video {
+    width: 100%; }
+.cutting-room .toolbox {
+  display: block;
+  float: left;
+  margin-right: 2.35765%;
+  width: 31.76157%;
+  padding: 0;
+  margin: 0;
+  height: 100%; }
+  .cutting-room .toolbox:last-child {
+    margin-right: 0; }
+  .cutting-room .toolbox .tabs {
+    list-style: none;
+    margin: 0 0 10px 0;
+    padding: 0;
+    border-bottom: 1px solid #ccc;
+    width: 100%; }
+    .cutting-room .toolbox .tabs li {
+      padding: 10px 0;
+      display: inline-block;
+      width: 32%;
+      text-align: center;
+      border-left: 1px solid #ccc;
+      cursor: pointer; }
+      .cutting-room .toolbox .tabs li.active {
+        font-weight: 900;
+        color: blue; }
+  .cutting-room .toolbox .revisions .revision-list {
+    overflow-y: scroll;
+    list-style: none;
+    margin: 0;
+    padding: 0; }
+    .cutting-room .toolbox .revisions .revision-list .revision {
+      margin: 0;
+      border-bottom: 1px solid #ccc;
+      padding: 10px 20px; }
+      .cutting-room .toolbox .revisions .revision-list .revision.active {
+        background-color: #aaaaff; }
+      .cutting-room .toolbox .revisions .revision-list .revision .icon {
+        height: 1em;
+        display: inline-block;
+        float: right;
+        margin-left: 20px;
+        cursor: pointer; }
+.cutting-room .timeline {
+  *zoom: 1;
+  display: block;
+  padding: 20px 0;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  border-top: 1px solid #ccc; }
+  .cutting-room .timeline:before, .cutting-room .timeline:after {
+    content: " ";
+    display: table; }
+  .cutting-room .timeline:after {
+    clear: both; }
+  .cutting-room .timeline ol {
+    display: block;
+    width: 1450px;
+    margin: 0;
+    padding: 0;
+    list-style: none; }
+  .cutting-room .timeline .panel {
+    display: inline-block; }
+    .cutting-room .timeline .panel .thumbnail {
+      width: 100px; }
+    .cutting-room .timeline .panel .time {
+      display: inline-block;
+      height: 20px;
+      margin-top: 20px;
+      background-color: blue; }
+.cutting-room .toolbar {
+  border-top: 1px solid #ccc;
+  padding: 5px 20px; }
+  .cutting-room .toolbar .title {
+    display: inline-block; }
+  .cutting-room .toolbar .button {
+    display: inline-block;
+    float: right;
+    margin-left: 20px; }
+
+.forum-topic {
+  border-top: 1px solid #ccc;
+  width: 100%; }
+  .forum-topic .forum-bar {
+    border-bottom: 1px solid #ccc;
+    *zoom: 1;
+    display: block; }
+    .forum-topic .forum-bar:before, .forum-topic .forum-bar:after {
+      content: " ";
+      display: table; }
+    .forum-topic .forum-bar:after {
+      clear: both; }
+    .forum-topic .forum-bar .forum-button {
+      border-left: 1px solid #ccc;
+      padding: 5px 10px;
+      float: right;
+      cursor: pointer; }
+      .forum-topic .forum-bar .forum-button.active {
+        background-color: #aaaaff; }
+  .forum-topic .forum-post {
+    border-bottom: 1px solid #ccc;
+    height: 60px;
+    *zoom: 1;
+    display: block; }
+    .forum-topic .forum-post:before, .forum-topic .forum-post:after {
+      content: " ";
+      display: table; }
+    .forum-topic .forum-post:after {
+      clear: both; }
+    .forum-topic .forum-post .profile {
+      box-sizing: border-box;
+      padding: 10px 20px;
+      height: 60px;
+      display: inline-block;
+      width: 20%;
+      border-right: 1px solid #ccc; }
+    .forum-topic .forum-post .post {
+      height: 60px;
+      display: inline-block;
+      width: 79%; }
+
+.add-reply {
+  float: right;
+  margin-right: 20px;
+  margin-top: 10px; }
+
+.big-button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border-radius: 10px; }
+  .big-button.active {
+    background-color: #aaaaff; }

@@ -10,7 +10,7 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         aws: grunt.file.readJSON('.aws.json'),
-        
+
         clean: ['compiled/'],
 
         copy: {
@@ -18,7 +18,7 @@ module.exports = function(grunt) {
                 files: [
                     {
                         dest: 'compiled/',
-                        cwd: 'src',
+                        cwd: 'src/',
                         src: '*.html',
                         expand: true
                     },
@@ -113,8 +113,8 @@ module.exports = function(grunt) {
                 'define(function() { return "' + bucket + '"; });');
         }
     );
-        
-            
+
+
 
     // set bucket, compile and push, then set bucket back to dev
     grunt.registerTask('deploy',

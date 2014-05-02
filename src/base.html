@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>S3 Javascript App</title>
+
+        <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    </head>
+    <body>
+        <div class="cutting-room">
+            <div class="top-half">
+                <section class="player">
+                    <video src="media/copter.ogv" controls preload="auto">
+                        Your browser does not support the <code>video</code> element.
+                    </video>
+                </section>
+
+                <div class="toolbox">
+                    <ul class="tabs">
+                        <li>Video</li>
+                        <li class="active">Revisions</li>
+                        <li>Chat</li>
+                    </ul>
+
+                    <section class="revisions tab">
+                        <ol class="revision-list">
+                            <li class="revision active">
+                                <span class="title">
+                                    Latest Revision
+                                </span>
+                                <img src="media/mail.png" class="icon"/>
+                                <img src="media/bubble.png" class="icon"/>
+                            </li>
+                            <li class="revision">
+                                <span class="title">
+                                    Scene 2 finished
+                                </span>
+                                <img src="media/mail.png" class="icon"/>
+                                <img src="media/bubble.png" class="icon"/>
+                            </li>
+                            <li class="revision">
+                                <span class="title">
+                                    OMG please help!
+                                </span>
+                                <img src="media/mail.png" class="icon"/>
+                                <img src="media/bubble.png" class="icon"/>
+                            </li>
+                            <li class="revision">
+                                <span class="title">
+                                    Revision 13
+                                </span>
+                                <img src="media/mail.png" class="icon"/>
+                                <img src="media/bubble.png" class="icon"/>
+                            </li>
+                        </ol>
+                    </section>
+                </div>
+            </div>
+
+            <div class="bottom-half">
+                <section class="timeline">
+                    <ol>
+                        <li class="panel">
+                            <img class="thumbnail" src="media/copter.jpg"/>
+                            <span class="time" style="width: 275px;"></span>
+                        </li>
+                        <li class="panel">
+                            <img class="thumbnail" src="media/copter.jpg"/>
+                            <span class="time" style="width: 60px;"></span>
+                        </li>
+                        <li class="panel">
+                            <img class="thumbnail" src="media/copter.jpg"/>
+                            <span class="time" style="width: 400px;"></span>
+                        </li>
+                        <li class="panel">
+                            <img class="thumbnail" src="media/copter.jpg"/>
+                            <span class="time" style="width: 200px;"></span>
+                        </li>
+                    </ol>
+                </section>
+            </div>
+
+            <div class="toolbar">
+                <div class="title">Storyboard Title</div>
+
+                <button class="share button">Share</button>
+                <button class="produce button">Produce</button>
+                <button class="preview button">Preview</button>
+            </div>
+        </div>
+    </body>
+</html>
