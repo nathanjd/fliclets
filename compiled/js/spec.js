@@ -31,7 +31,8 @@ require(['jquery', 'mocha'], function($) {
         mocha.checkLeaks();
 
         require([
-            'spec/test'
+            'spec/test',
+            'spec/api'
         ], function() {
             mocha.run();
         });

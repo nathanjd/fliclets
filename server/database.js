@@ -12,7 +12,7 @@ module.exports = when.promise(function(resolve, reject, notify) {
     db = orm.connect('sqlite://test.db');
 
     db.on('connect', function(err) {
-        var Media,
+        var Medium,
             Storyboard,
             User,
             Panel;
@@ -22,84 +22,159 @@ module.exports = when.promise(function(resolve, reject, notify) {
         }
 
         db.use(modts, {
-            createdProperty: 'createdAt',
-            modifiedProperty: 'modifiedAt',
+            createdProperty: 'created_at',
+            modifiedProperty: 'modified_at',
             dbtype: { type: 'date', time: true },
             now: function() { return new Date(); },
             persist: true
         });
 
-        // Media
-        Media = db.define('media', {
+        // Medium
+        Medium = db.define('medium', {
             name     : String,
             type     : ['video', 'image'],
             duration : Number,
             width    : { type: 'integer' },
-            height   : { type: 'integer' }
+            height   : { type: 'integer' },
+            uri      : String
         }, {
             methods: {
-                uri: function() {
-                    return '/api/media/' + this.id;
+                self: function() {
+                    return '/api/medium/' + this.id;
+                },
+                toJSON: function() {
+                    var thumbnail_id = (!this.thumbnail_id) ?
+                        null : parseInt(this.thumbnail_id, 10);
+
+                    return {
+                        id           : parseInt(this.id, 10),
+                        name         : this.name,
+                        type         : this.type,
+                        duration     : this.duration,
+                        width        : parseInt(this.width, 10),
+                        height       : parseInt(this.height, 10),
+                        uri          : this.uri,
+                        thumbnail_id : thumbnail_id,
+                        created_at   : this.created_at,
+                        updated_at   : this.updated_at
+
+                    };
                 }
             },
             timestamp: true
         });
 
-        Media.hasOne('thumbnail', Media);
+        // Panel
+        Panel = db.define('panel', {
+            start  : Number,
+            end    : Number
+        }, {
+            methods: {
+                self: function() {
+                    return '/api/panel/' + this.id;
+                },
+                getThumbnail: function(callback) {
+                    this.getMedium(function(err, medium) {
+                        if (err) {
+                            callback(err);
+                        } else if (!medium) {
+                            // return default thumbnail
+                        } else {
+                            // return thumbnail of first panel
+                            medium.getThumbnail(callback);
+                        }
+                    });
+                },
+                toJSON: function() {
+                    var medium_id = (!this.medium_id) ?
+                            null : parseInt(this.medium_id, 10),
+                        storyboard_id = (!this.storyboard_id) ?
+                            null : parseInt(this.storyboard_id, 10),
+                        selected_by_id = (!this.selected_by_id) ?
+                            null : parseInt(this.selected_by_id, 10);
+
+                    return {
+                        id             : parseInt(this.id, 10),
+                        start          : this.start,
+                        end            : this.end,
+                        medium_id      : medium_id,
+                        storyboard_id  : storyboard_id,
+                        selected_by_id : selected_by_id,
+                        created_at     : this.created_at,
+                        updated_at     : this.updated_at
+                    };
+                }
+            },
+            timestamp: true
+        });
 
         // Storyboard
         Storyboard = db.define('storyboard', {
             name: String
         }, {
             methods: {
-                uri: function() {
+                self: function() {
                     return '/api/storyboard/' + this.id;
                 },
-                thumbnail: function() {
-                    if (!this.panels[0]) {
-                        // return default thumbnail
-                    }
-
-                    return this.panels[0].media.thumbnail();
+                getThumbnail: function(callback) {
+                    this.getPanels(function(err, panels) {
+                        if (err) {
+                            callback(err);
+                        } else if (!panels.length) {
+                            // return default thumbnail
+                        } else {
+                            // return thumbnail of first panel
+                            panels[0].getThumbnail(callback);
+                        }
+                    });
+                },
+                toJSON: function() {
+                    return {
+                        id         : parseInt(this.id, 10),
+                        name       : this.name,
+                        created_at : this.created_at,
+                        updated_at : this.updated_at
+                    };
                 }
             },
             timestamp: true
         });
-
-        Storyboard.hasMany('media', Media);
-        Storyboard.hasMany('panels', Panel);
 
         // User
         User = db.define('user', {
             name: String
         }, {
             methods: {
-                uri: function() {
+                self: function() {
                     return '/api/user/' + this.id;
+                },
+                toJSON: function() {
+                    return {
+                        id         : parseInt(this.id, 10),
+                        name       : this.name,
+                        created_at : this.created_at,
+                        updated_at : this.updated_at
+                    };
                 }
             },
             timestamp: true
         });
 
-        User.hasMany('media', Media);
+        // Define relationships.
+        Medium.hasOne('thumbnail', Medium);
 
-        // Panel
-        Panel = db.define('panel', {
-            start  : Number,
-            end    : Number,
-            height : { type: 'integer' }
-        }, {
-            methods: {
-                uri: function() {
-                    return '/api/panel/' + this.id;
-                }
-            },
-            timestamp: true
-        });
+        Panel.hasOne('storyboard', Storyboard, {}, { reverse: 'panels' });
+        Panel.hasOne('medium', Medium, {}, { reverse: 'panels' });
+        Panel.hasOne('selected_by', User, {}, { reverse: 'selectedPanels' });
 
-        Panel.hasOne('thumbnail', Media);
-        Panel.hasOne('media', Media);
-        Panel.hasOne('selectedBy', User);
+        Storyboard.hasMany('media', Medium, {}, { reverse: 'storyboards' });
+
+        User.hasMany('media', Medium, {
+            relationship: ['owner', 'collaborator', 'viewer']
+        }, { reverse: 'users' });
+        User.hasMany('storyboards', {
+            relationship: ['owner', 'collaborator', 'viewer']
+        }, { reverse: 'users' });
 
         resolve(db);
     });
