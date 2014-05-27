@@ -9,4 +9,8 @@ function(tempaltes, router, when, Storyboard) {
             }));
         });
     });
+
+    router.addRoute('/upload-media', function(id) {
+        $('#js-app').html(templates.upload_media());
+    });
 });

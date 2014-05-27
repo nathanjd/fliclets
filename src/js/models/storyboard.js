@@ -3,11 +3,11 @@ define(['models/model'], function(Model) {
         this.set(data);
     }
 
-    Storyboard.prototype = Model;
+    Storyboard.prototype = Model.prototype;
 
-    Media.prototype.apiPath = '/js/api/storyboard/';
+    Storyboard.prototype.apiPath = '/js/api/storyboard';
 
-    Storyboard.prorotype.addPanel = function(panel, index) {
+    Storyboard.prototype.addPanel = function(panel, index) {
         if (index === undefined) {
             index = this.panels.length;
         }
@@ -18,7 +18,7 @@ define(['models/model'], function(Model) {
         }
     };
 
-    Storyboard.prorotype.removePanel = function(panelOrIndex) {
+    Storyboard.prototype.removePanel = function(panelOrIndex) {
         var index;
 
         if (isNaN(panelOrIndex)) {
@@ -35,7 +35,7 @@ define(['models/model'], function(Model) {
         }
     };
 
-    Storyboard.prorotype.setName = function(newName) {
+    Storyboard.prototype.setName = function(newName) {
         if (typeof newName !== 'string' || !newName.length) {
             return;
         }

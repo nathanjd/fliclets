@@ -9,7 +9,7 @@ module.exports = when.promise(function(resolve, reject, notify) {
         resolve(db);
     }
 
-    db = orm.connect('sqlite://test.db');
+    db = orm.connect('sqlite://test.db?debug=true');
 
     db.on('connect', function(err) {
         var Medium,

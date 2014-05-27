@@ -17,7 +17,10 @@ require.config({
         // Amazon S3
         S3Ajax: 'lib/S3Ajax',
         sha1: 'lib/sha1'
-    }
+    },
+    packages: [
+        { name: 'when', location: '/js/lib/when', main: 'when' }
+      ]
 });
 
 require([

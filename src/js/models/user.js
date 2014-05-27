@@ -5,7 +5,7 @@ define(['models/model'], function(Model) {
 
     User.prototype = Model;
 
-    Media.prototype.apiPath = '/js/api/user/';
+    User.prototype.apiPath = '/js/api/user';
 
     return User;
 });

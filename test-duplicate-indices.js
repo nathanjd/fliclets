@@ -1,8 +1,8 @@
-var when = require('when'),
+var orm = require('orm'),
+    when = require('when'),
     sequence = require('when/sequence'),
 
-    database = require('./server/database'),
-    bootstrapData = require('./server/bootstrap_data');
+    db = orm.connect('sqlite://test.db?debug=true');
 
 function dropModel(model) {
     var deferred = when.defer();
@@ -18,7 +18,7 @@ function dropModel(model) {
     return deferred.promise;
 }
 
-function dropModels(db) {
+function dropModels() {
     var tasks = Object.keys(db.models).map(function(key) {
         return dropModel.bind(null, db.models[key]);
     });
@@ -41,7 +41,7 @@ function bootstrapModel(model) {
     return deferred.promise;
 }
 
-function bootstrapModels(db) {
+function bootstrapModels() {
     var tasks = Object.keys(db.models).map(function(key) {
         return bootstrapModel.bind(null, db.models[key]);
     });
@@ -49,9 +49,19 @@ function bootstrapModels(db) {
     return sequence(tasks);
 }
 
+db.on('connect', function(err) {
+    var A,
+        B,
+        C;
 
-database.then(function(db) {
-    console.log('Dropping models...');
+    A = db.define('a', { name: String });
+
+    B = db.define('b', { name: String });
+
+    C = db.define('c', { name: String });
+
+    A.hasMany('bees', B, {}, { reverse: 'eighs' });
+    A.hasMany('cees', C, {}, { reverse: 'eighs' });
 
     dropModels(db).then(function() {
         console.log('Successfully dropped models.');
@@ -67,5 +77,3 @@ database.then(function(db) {
         console.log('Failed to drop models:', err);
     });
 });
-
-

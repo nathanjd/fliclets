@@ -1,3 +1,5 @@
+var spawn = require('child_process').spawn;
+
 module.exports.init = function(server, db) {
     console.log('storyboard init()');
 
@@ -77,6 +79,14 @@ module.exports.init = function(server, db) {
 
     // produce storyboard to video
     server.post('/api/storyboard/:storyboard/produce', function(req, res, next) {
+        var ffmpeg = spawn('ffmpeg');
 
+        ffmpeg.stdout.on('data', function(data) {
+            console.log('ffmpeg stdout:', data);
+        });
+
+        ffmpeg.stderr.on('data', function(data) {
+            console.log('ffmpeg stderr:', data);
+        });
     });
 };

@@ -1,5 +1,123 @@
-module.exports.init = function(server, db) {
+var fs = require('fs'),
+    multiparty = require('multiparty'),
+    when = require('when'),
+
+    ffmpeg = require('../lib/ffmpeg'),
+
+    db;
+
+function createMedium(attributes) {
+    var deferred = when.defer();
+
+    db.models.medium.create(attributes, function(err, medium) {
+        if (err) {
+             deferred.reject(err);
+        } else if (medium) {
+            console.log('created medium:', medium.id);
+            deferred.resolve(medium);
+        } else {
+            deferred.reject(new Error('failed to create medium'));
+        }
+    });
+
+    return deferred.promise;
+}
+
+function createThumbnail(medium) {
+    var deferred = when.defer(),
+        thumbPath = medium.uri;
+
+    console.log('Creating thumbnail medium for medium:', medium.id);
+
+    createMedium({
+        type: 'image',
+        width: medium.width,
+        height: medium.height
+    }).then(function(thumbnail) {
+        var cwd = process.cwd(),
+            mediumPath = cwd + '/' + medium.uri,
+            thumbUri = '/media/thumbs/' + thumbnail.id + '.jpg',
+            thumbPath = cwd + thumbUri;
+
+        console.log('Creating thumbnail into:', thumbnail.id);
+
+        ffmpeg.thumbnail(mediumPath, thumbPath).then(function(thumbPath) {
+            console.log('Thumbnail created', thumbPath);
+
+            thumbnail.uri = thumbUri;
+
+            saveMedium(thumbnail).then(function(thumbnail) {
+                console.log('Creating thumnail association');
+
+                medium.setThumbnail(thumbnail, function(err, medium) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(medium);
+                    }
+                });
+            }, deferred.reject);
+        }, deferred.reject);
+    }, deferred.reject);
+
+    return deferred.promise;
+}
+
+function determineMetadata(medium) {
+    var deferred = when.defer();
+
+    // determine type of the medium
+    medium.type = 'video';
+
+    // determine width and height
+    medium.width = 560;
+    medium.height = 320;
+
+    // determine duration
+    medium.duration = 5;
+
+    deferred.resolve(medium);
+
+    return deferred.promise;
+}
+
+function processVideo(medium) {
+    var deferred = when.defer(),
+        newURI = '/media/' + medium.id + '.ogv',
+        newPath = process.cwd() + newURI;
+
+    // save file to /media
+    fs.rename(medium.uri, newPath, function(err) {
+        if (err) {
+            deferred.reject(err);
+        } else {
+            medium.uri = newURI;
+            deferred.resolve(medium);
+        }
+    });
+
+    return deferred.promise;
+}
+
+function saveMedium(medium) {
+    var deferred = when.defer();
+
+    medium.save(function(err) {
+        if (err) {
+            deferred.reject(err);
+        } else {
+            console.log('updated medium:', medium.id);
+            deferred.resolve(medium);
+        }
+    });
+
+    return deferred.promise;
+}
+
+module.exports.init = function(server, newDB) {
     console.log('medium init()');
+
+    db = newDB;
 
     server.param('medium', function(req, res, next, id) {
         // retrieve single
@@ -25,15 +143,34 @@ module.exports.init = function(server, db) {
 
     // create
     server.post('/api/medium', function(req, res, next) {
-        db.models.medium.create(req.body, function(err, medium) {
+        var form = new multiparty.Form({
+            autofiles: true
+        });
+
+        console.log('req.files:', req.files);
+
+        form.parse(req, function(err, fields, files) {
+            console.log('parsed multipart form', err, fields, files);
+
             if (err) {
-                 next(err);
-            } else if (medium) {
-                console.log('created medium:', medium.id);
-                res.json(medium.toJSON());
-            } else {
-                next(new Error('failed to create medium'));
+                next(err);
+                return;
             }
+
+            if (files.source && files.source.length) {
+                console.log('found uploaded files', files);
+
+                fields.uri = files.source[0].path;
+            }
+
+            createMedium(fields)
+                .then(processVideo, next)
+                .then(determineMetadata, next)
+                .then(createThumbnail, next)
+                .then(saveMedium, next)
+                .then(function(medium) {
+                    res.json(medium.toJSON());
+                }, next);
         });
     });
 
@@ -53,14 +190,9 @@ module.exports.init = function(server, db) {
             }
         }
 
-        req.medium.save(function(err) {
-            if (err) {
-                next(err);
-            } else {
-                console.log('updated medium:', req.medium.id);
-                res.json(req.medium.toJSON());
-            }
-        });
+        saveMedium(req.medium).then(function(medium) {
+            res.json(req.medium.toJSON());
+        }, next);
     });
 
     // delete

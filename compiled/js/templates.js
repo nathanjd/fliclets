@@ -46,6 +46,10 @@ this["templates"]["page_two"] = Handlebars.default.template({"compiler":[5,">= 2
   return "<div class=\"page-two\">\n  <h3>Page Two</h3>\n\n  <p>\n    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec commodo eu quam quis varius. Nam pharetra a elit sit amet convallis. Donec non nibh sed turpis porttitor euismod id eu augue. Vestibulum tincidunt iaculis purus, a feugiat quam rutrum ac. Morbi elementum elementum risus, quis ultrices sem lobortis a. Sed vitae nibh blandit, facilisis nibh placerat, commodo odio. Praesent cursus eros sed accumsan gravida. Etiam ut dolor non lectus cursus aliquet. Phasellus vitae ipsum id mauris aliquam faucibus. Vestibulum quis ultrices nulla. Pellentesque vulputate tortor eu mauris facilisis, malesuada fermentum nunc adipiscing. Integer tristique turpis vel convallis feugiat.\n  </p>\n</div>";
   },"useData":true});
 
+this["templates"]["upload_media"] = Handlebars.default.template({"compiler":[5,">= 2.0.0"],"main":function(depth0,helpers,partials,data) {
+  return "<h2>Upload Media</h2>\n\n\n<form action=\"/api/medium\" method=\"post\" enctype=\"multipart/form-data\">\n    <p>\n        <input type=\"file\" name=\"source\"/>\n    </p>\n\n    <p>\n        <label>\n            name <input type=\"text\" name=\"name\"/>\n        </label>\n    </p>\n\n    <p>\n        <input type=\"submit\"/>\n    </p>\n</form>";
+  },"useData":true});
+
 return this["templates"];
 
 });

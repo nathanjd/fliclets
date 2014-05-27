@@ -5,7 +5,7 @@ define(['models/model'], function(Model) {
 
     Panel.prototype = Model;
 
-    Media.prototype.apiPath = '/js/api/panel/';
+    Panel.prototype.apiPath = '/js/api/panel';
 
     return Panel;
 });

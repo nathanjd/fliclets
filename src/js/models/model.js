@@ -33,13 +33,14 @@ define(['jquery', 'when'], function($, when) {
     // Get model from server.
     Model.prototype.pull = function(id) {
         var deferred = when.defer(),
-            _this = this;
+            _this = this,
+            apiPath = Object.getPrototypeOf(this).apiPath;
 
         if (id) {
             this.id = id;
         }
 
-        when($.get(this.prototype.apiPath + this.id + '.json'))
+        when($.get(apiPath + '/' + this.id + '.json'))
             .then(function(data) {
                 var modelKey = _this.constructor.name.toLowerCase();
                 _this.set(data[modelKey]);

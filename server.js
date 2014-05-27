@@ -9,7 +9,7 @@ var express = require('express'),
     database = require('./server/database');
 
 function logger(req, res, next) {
-    console.log(req.path, req.params, req.query, req.body);
+    console.log(req.method, req.path, req.params, req.query, req.body);
     next();
 }
 
@@ -19,6 +19,9 @@ database.then(function(db) {
 
     // Dynamic routes
     require('./server/routes').init(server, db);
+
+    // Media files route
+    server.use('/media', express.static(__dirname + '/media'));
 
     // Static files route
     server.use(express.static(__dirname + '/compiled'));
