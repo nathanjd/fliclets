@@ -1,0 +1,20 @@
+<div id="slider" class="slider"></div>
+
+<div id="timeline" class="timeline">
+    <ol id="storyboard" class="storyboard">
+        {{#each storyboard.panels}}
+            <li id="panel-{{id}}" class="panel">
+                <div class="duration"></div>
+                <img class="panel-thumb" src="{{thumbnail.uri}}"/>
+            </li>
+        {{/each}}
+    </ol>
+</div>
+
+<div class="toolbar">
+    <div class="title">{{storyboard.name}}</div>
+
+    <button class="share button">Share</button>
+    <button class="produce button">Produce</button>
+    <button class="preview button">Preview</button>
+</div>

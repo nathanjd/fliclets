@@ -11,8 +11,6 @@ module.exports.thumbnail = function(sourcePath, thumbPath) {
             thumbPath
         ];
 
-        //ffmpeg -i media/video1.avi -vf "thumbnail" -frames:v 1 thumb.png
-
     console.log('ffmpeg', args.join(' '));
 
     ffmpeg = spawn('ffmpeg', args);

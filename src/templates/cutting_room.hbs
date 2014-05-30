@@ -1,41 +1,28 @@
 <div class="cutting-room">
     <section class="player">
-        <video src="media/copter.ogv" controls preload="auto">
+        <video id="player" src="media/copter.ogv" controls preload="auto">
             Your browser does not support the <code>video</code> element.
         </video>
     </section>
 
-    <section class="library">
-        <ul>
-            {{#each library.videos}}
-                <li>
-                    <img src="{{thumbnail.uri}}"/>
-                    <span class="thumbnail-duration">{{duration}}</span>
-                    <span class="thumbnail-name">{{name}}</span>
-                </li>
-            {{/each}}
+    <div class="toolbox">
+        <ul class="tabs">
+            <li id="video-tab" class="active">Video</li>
+            <li id="revisions-tab">Revisions</li>
+            <li id="chat-tab">Chat</li>
         </ul>
 
-        <ul>
-            {{#each library.audio}}
-                <li>
-                    <audio src="audio.ogg" controls>
-                        <p>Your browser does not support the audio element </p>
-                    </audio>
-                    <span class="audio-name">{{name}}</span>
-                </li>
-            {{/each}}
-        </ul>
-    </section>
+        <section class="library toolbox-section active" id="library">
 
-    <section class="timeline">
-        <ol>
-            {{#each storyboard.panels}}
-                <li>
-                    <img src="{{thumbnail.uri}}"/>
-                </li>
-            {{/each}}
-        </ol>
+        </section>
+
+        <section class="revisions toolbox-section" id="revisions">
+
+        </section>
+    </div>
+
+    <section id="workspace" class="workspace">
+
     </section>
 
     <section class="social">

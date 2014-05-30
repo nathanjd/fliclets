@@ -83,7 +83,7 @@ function determineMetadata(medium) {
 
 function processVideo(medium) {
     var deferred = when.defer(),
-        newURI = '/media/' + medium.id + '.ogv',
+        newURI = '/media/' + medium.id + '.avi',
         newPath = process.cwd() + newURI;
 
     // save file to /media
@@ -138,7 +138,28 @@ module.exports.init = function(server, newDB) {
 
     // search
     server.get('/api/medium', function(req, res, next) {
+        var options = {};
 
+        console.log('starting search of medium', req.query);
+        if (req.query) {
+            options = req.query;
+        }
+
+        db.models.medium.find(options, function(err, media) {
+            var json;
+
+            if (err) {
+                next(err);
+            } else if (media) {
+                when.map(media, function(medium) {
+                    return medium.toJSON();
+                }).then(function(json) {
+                    res.json(json);
+                }, next);
+            } else {
+                next(new Error('Failed to retrieve media.'));
+            }
+        });
     });
 
     // create
@@ -169,7 +190,9 @@ module.exports.init = function(server, newDB) {
                 .then(createThumbnail, next)
                 .then(saveMedium, next)
                 .then(function(medium) {
-                    res.json(medium.toJSON());
+                    medium.toJSON().then(function(json) {
+                        res.json(json);
+                    }, next);
                 }, next);
         });
     });
@@ -177,7 +200,10 @@ module.exports.init = function(server, newDB) {
     // retrieve
     server.get('/api/medium/:medium', function(req, res, next) {
         console.log('sending medium:', req.medium.id);
-        res.json(req.medium.toJSON());
+
+        req.medium.toJSON().then(function(json) {
+            res.json(json);
+        }, next);
     });
 
     // update
@@ -191,7 +217,9 @@ module.exports.init = function(server, newDB) {
         }
 
         saveMedium(req.medium).then(function(medium) {
-            res.json(req.medium.toJSON());
+            req.medium.toJSON().then(function(json) {
+                res.json(json);
+            }, next);
         }, next);
     });
 

@@ -93,11 +93,13 @@ body {
   margin-right: 2.35765%;
   width: 65.88078%;
   padding: 0;
-  margin: 0; }
+  margin: 0;
+  height: 320px; }
   .cutting-room .player:last-child {
     margin-right: 0; }
   .cutting-room .player video {
-    width: 100%; }
+    max-width: 100%;
+    max-height: 100%; }
 .cutting-room .toolbox {
   display: block;
   float: left;
@@ -105,7 +107,9 @@ body {
   width: 31.76157%;
   padding: 0;
   margin: 0;
-  height: 100%; }
+  height: 100%;
+  border-bottom: 1px solid #ccc;
+  height: 320px; }
   .cutting-room .toolbox:last-child {
     margin-right: 0; }
   .cutting-room .toolbox .tabs {
@@ -124,6 +128,12 @@ body {
       .cutting-room .toolbox .tabs li.active {
         font-weight: 900;
         color: blue; }
+  .cutting-room .toolbox .toolbox-section {
+    height: 256px;
+    display: none;
+    position: relative; }
+    .cutting-room .toolbox .toolbox-section.active {
+      display: block; }
   .cutting-room .toolbox .revisions .revision-list {
     overflow-y: scroll;
     list-style: none;
@@ -141,33 +151,38 @@ body {
         float: right;
         margin-left: 20px;
         cursor: pointer; }
-.cutting-room .timeline {
+.cutting-room .workspace {
   *zoom: 1;
   display: block;
-  padding: 20px 0;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  border-top: 1px solid #ccc; }
-  .cutting-room .timeline:before, .cutting-room .timeline:after {
+  clear: both;
+  background-color: black; }
+  .cutting-room .workspace:before, .cutting-room .workspace:after {
     content: " ";
     display: table; }
-  .cutting-room .timeline:after {
+  .cutting-room .workspace:after {
     clear: both; }
-  .cutting-room .timeline ol {
-    display: block;
-    width: 1450px;
-    margin: 0;
-    padding: 0;
-    list-style: none; }
-  .cutting-room .timeline .panel {
-    display: inline-block; }
-    .cutting-room .timeline .panel .thumbnail {
-      width: 100px; }
-    .cutting-room .timeline .panel .time {
-      display: inline-block;
-      height: 20px;
-      margin-top: 20px;
-      background-color: blue; }
+  .cutting-room .workspace .timeline {
+    padding: 20px 0;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    border-top: 1px solid #ccc;
+    background-color: #333; }
+    .cutting-room .workspace .timeline .storyboard {
+      display: block;
+      width: 1450px;
+      min-height: 200px;
+      margin: 0;
+      padding: 0;
+      list-style: none; }
+    .cutting-room .workspace .timeline .panel {
+      display: inline-block; }
+      .cutting-room .workspace .timeline .panel .thumbnail {
+        width: 100px; }
+      .cutting-room .workspace .timeline .panel .time {
+        display: inline-block;
+        height: 20px;
+        margin-top: 20px;
+        background-color: blue; }
 .cutting-room .toolbar {
   border-top: 1px solid #ccc;
   padding: 5px 20px; }
@@ -230,3 +245,24 @@ body {
   border-radius: 10px; }
   .big-button.active {
     background-color: #aaaaff; }
+
+.media-widget .media-list {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+  .media-widget .media-list .medium {
+    display: inline-block;
+    width: 120px;
+    padding: 5px;
+    margin: 5px; }
+    .media-widget .media-list .medium .medium-thumb {
+      max-width: 100px;
+      max-height: 100px; }
+    .media-widget .media-list .medium .medium-name {
+      text-align: center; }
+.media-widget .control-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #ccc; }

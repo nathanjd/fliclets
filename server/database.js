@@ -43,22 +43,44 @@ module.exports = when.promise(function(resolve, reject, notify) {
                     return '/api/medium/' + this.id;
                 },
                 toJSON: function() {
-                    var thumbnail_id = (!this.thumbnail_id) ?
-                        null : parseInt(this.thumbnail_id, 10);
+                    var thumbnailId = (!this.thumbnail_id) ?
+                        null : parseInt(this.thumbnail_id, 10),
+                        deferred = when.defer(),
+                        json = {
+                            id         : parseInt(this.id, 10),
+                            name       : this.name,
+                            type       : this.type,
+                            duration   : this.duration,
+                            width      : parseInt(this.width, 10),
+                            height     : parseInt(this.height, 10),
+                            uri        : this.uri,
+                            created_at : this.created_at,
+                            updated_at : this.updated_at
+                        };
 
-                    return {
-                        id           : parseInt(this.id, 10),
-                        name         : this.name,
-                        type         : this.type,
-                        duration     : this.duration,
-                        width        : parseInt(this.width, 10),
-                        height       : parseInt(this.height, 10),
-                        uri          : this.uri,
-                        thumbnail_id : thumbnail_id,
-                        created_at   : this.created_at,
-                        updated_at   : this.updated_at
+                    if (thumbnailId) {
+                        console.log('Searching for thumbnail:', thumbnailId);
 
-                    };
+                        this.getThumbnail(function(err, thumbnail) {
+                            if (err) {
+                                deferred.reject(err);
+                            } else if(thumbnail) {
+                                thumbnail.toJSON().then(function(thumbJSON) {
+                                    json.thumbnail = thumbJSON;
+                                    deferred.resolve(json);
+                                });
+                            } else {
+                                deferred.reject(
+                                    new Error('Failed to get thumbnail')
+                                );
+                            }
+                        });
+                    } else {
+                        json.thumbnail = null;
+                        deferred.resolve(json);
+                    }
+
+                    return deferred.promise;
                 }
             },
             timestamp: true

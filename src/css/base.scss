@@ -107,9 +107,11 @@ body {
         @include span-columns(8);
         padding: 0;
         margin: 0;
+        height: 320px;
 
         video {
-            width: 100%;
+            max-width: 100%;
+            max-height: 100%;
         }
     }
 
@@ -118,6 +120,8 @@ body {
         padding: 0;
         margin: 0;
         height: 100%;
+        border-bottom: 1px solid #ccc;
+        height: 320px;
 
         .tabs {
             list-style: none;
@@ -138,6 +142,16 @@ body {
                     font-weight: 900;
                     color: blue;
                 }
+            }
+        }
+
+        .toolbox-section {
+            height: 256px;
+            display: none;
+            position: relative;
+
+            &.active {
+                display: block;
             }
         }
 
@@ -167,40 +181,46 @@ body {
                     }
                 }
             }
-
-
         }
     }
 
-    .timeline {
+    .workspace {
         @include row();
-        padding: 20px 0;
-        overflow-x: scroll;
-        overflow-y: hidden;
-        border-top: 1px solid #ccc;
+        clear: both;
+        background-color: black;
 
-        ol {
-            display: block;
-            width: 1450px;
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        .panel {
-            display: inline-block;
+        .timeline {
+            padding: 20px 0;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            border-top: 1px solid #ccc;
+            background-color: #333;
 
-            .thumbnail {
-                width: 100px;
+            .storyboard {
+                display: block;
+                width: 1450px;
+                min-height: 200px;
+                margin: 0;
+                padding: 0;
+                list-style: none;
             }
-
-            .time {
+            .panel {
                 display: inline-block;
-                height: 20px;
-                margin-top: 20px;
-                background-color: blue;
+
+                .thumbnail {
+                    width: 100px;
+                }
+
+                .time {
+                    display: inline-block;
+                    height: 20px;
+                    margin-top: 20px;
+                    background-color: blue;
+                }
             }
         }
     }
+
 
     .toolbar {
         border-top: 1px solid #ccc;
@@ -273,5 +293,38 @@ body {
 
     &.active {
         background-color: #aaaaff;
+    }
+}
+
+.media-widget {
+    .media-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        .medium {
+            display: inline-block;
+            width: 120px;
+            padding: 5px;
+            margin: 5px;
+
+            .medium-thumb {
+                max-width: 100px;
+                max-height: 100px;
+            }
+
+            .medium-name {
+                text-align: center;
+            }
+        }
+    }
+
+    .control-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        border-top: 1px solid #ccc;
     }
 }

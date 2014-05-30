@@ -2,6 +2,7 @@ require.config({
     paths: {
         // DOM manipulation and AJAX
         jquery: 'lib/jquery',
+        'jquery-ui': 'lib/jquery-ui',
 
         // Routing
         crossroads: 'lib/crossroads',
@@ -20,7 +21,13 @@ require.config({
     },
     packages: [
         { name: 'when', location: '/js/lib/when', main: 'when' }
-      ]
+    ],
+    shim: {
+        'jquery-ui': {
+            exports: '$',
+            deps: ['jquery']
+        }
+    }
 });
 
 require([

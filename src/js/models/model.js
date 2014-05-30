@@ -1,29 +1,7 @@
-define(['jquery', 'when'], function($, when) {
+define(['lodash', 'jquery', 'when'], function(_, $, when) {
     function Model(data) {
         this.set(data);
     }
-
-    Model.prototype.updated = function() {
-        this.createdAt = Date.now();
-    };
-
-    Model.prototype.set = function(targetKey, newValue) {
-        var key;
-
-        if (typeof targetKey === 'object') {
-            // Set all keys in targetKey object.
-            for (key in targetKey) {
-                if (this.hasOwnProperty(key)) {
-                    this[key] = targetKey[key];
-                }
-            }
-        } else {
-            // Set single key.
-            if (this.hasOwnProperty(targetKey)) {
-               this[targetKey] = newValue;
-            }
-        }
-    };
 
     // Save model to server.
     Model.prototype.push = function() {
@@ -49,6 +27,40 @@ define(['jquery', 'when'], function($, when) {
             });
 
         return deferred.promise;
+    };
+
+    Model.prototype.set = function(targetKey, newValue, silent) {
+        var key,
+            newAtrributes,
+            updated = false;
+
+        if (typeof targetKey === 'object') {
+            newAtrributes = targetKey;
+            silent = newValue;
+
+            // Set all keys in targetKey object.
+            for (key in newAtrributes) {
+                if (this[key] !== newAtrributes[key]) {
+                    updated = true;
+                }
+                this[key] = newAtrributes[key];
+            }
+        } else {
+            // Set single key.
+            if (this[targetKey] !== newValue) {
+                updated = true;
+            }
+           this[targetKey] = newValue;
+        }
+
+        // Fire updated function if any values changed.
+        if (!silent && updated && typeof this.updated === 'function') {
+            this.updated();
+        }
+    };
+
+    Model.prototype.updated = function() {
+
     };
 
     return Model;

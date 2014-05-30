@@ -1,11 +1,53 @@
-define(['models/model'], function(Model) {
+define(['lodash', 'jquery', 'when', 'models/model'],
+function(_, $, when, Model) {
     function Storyboard(data) {
-        this.set(data);
+        this.set.apply(this, [data, true]);
+
+        if (this.panels) {
+            this.panels = this.panels.map(function(panel) {
+                return new Panel(panel);
+            });
+        }
     }
 
-    Storyboard.prototype = Model.prototype;
+    Storyboard.prototype = _.cloneDeep(Model.prototype);
 
     Storyboard.prototype.apiPath = '/js/api/storyboard';
+
+    Storyboard.prototype.get = function() {
+        var _this = this,
+            deferred = when.defer();
+
+        function success(storyboard) {
+            storyboard.id = parseInt(storyboard.id, 10);
+
+            _this.set(storyboard, true);
+
+            deferred.resolve(storyboard);
+        }
+
+        function error(jqXHR, textStatus, err) {
+            deferred.reject(err);
+        }
+
+        if (this.id) {
+            $.ajax('api/storyboard/' + this.id, {
+                type: 'GET',
+                dataType: 'json',
+                success: success,
+                error: error
+            });
+        } else {
+            $.ajax('api/storyboard', {
+                type: 'POST',
+                dataType: 'json',
+                success: success,
+                error: error
+            });
+        }
+
+        return deferred.promise;
+    };
 
     Storyboard.prototype.addPanel = function(panel, index) {
         if (index === undefined) {

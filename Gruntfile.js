@@ -23,6 +23,12 @@ module.exports = function(grunt) {
                         expand: true
                     },
                     {
+                        dest: 'compiled/css/ui-lightness/',
+                        cwd: 'src/css/ui-lightness/',
+                        src: '**',
+                        expand: true
+                    },
+                    {
                         dest: 'compiled/css/mocha.css',
                         src: 'src/css/mocha.css'
                     },

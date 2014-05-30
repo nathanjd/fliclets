@@ -1,0 +1,16 @@
+<div class="media-widget">
+    <ul class="media-list">
+        {{#each media}}
+            <li class="medium" id="medium-{{id}}">
+                <img class="medium-thumb" src="{{thumbnail.uri}}"/>
+                <p class="medium-name">
+                    {{name}}
+                </p>
+            </li>
+        {{/each}}
+    </ul>
+
+    <div class="control-bar">
+        <a id="upload-media">Upload Media</a>
+    </div>
+</div>
