@@ -63,7 +63,7 @@ Push to the bucket "my-bucket" by executing the grunt task "deploy" from the com
 [jQuery](http://api.jquery.com/) - DOM Interaction and AJAX  
 [Handlebars](http://handlebarsjs.com/) - Templating
 
-[Mocha](http://visionmedia.github.io/mocha/) - Unit Testing  
+[Mocha](http://mochajs.org/) - Unit Testing  
 [Chai](http://chaijs.com/guide/styles/) - Assertions
 
 ### Build & Development
